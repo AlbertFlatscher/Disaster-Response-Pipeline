@@ -69,7 +69,7 @@ def save_data(df, database_filename):
     Returns:
         - 
     '''
-    engine = create_engine('sqlite:///' + database_filename + '.db')
+    engine = create_engine('sqlite:///' + database_filename)
     df.to_sql('Responses', engine, index=False)
 
 
