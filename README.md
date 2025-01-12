@@ -33,14 +33,40 @@ The categories are the following:
 
 ## Files <a name="files"></a>
 
-The following files are provided within this project:
+<p>The following files are provided within this project:</p>
 
 <ul>
-  <li><b>DisasterResponse.db<b>
-  <li><b>ETL Pipeline Preparation.ipynb<b>
-  <li><b>ML Pipeline Preparation.ipynb<b>
-  <li><b>process_data.py<b>
-  <li><b>README.md<b> This file</li>
+  <li><b>ETL Pipeline Preparation.ipynb:</b> ETL Pipeline. Loads in the .csv files, cleans the data, and stores it in "DisasterResponse.db" under the table name "Responses".</li>
+  <li><b>ML Pipeline Preparation.ipynb:</b> Jupyter notebook for machine learning pipeline preparation.</li>
+  <li><b>process_data.py:</b> Python script refactored from "ETL Pipeline Preparation.ipynb"</li>
+  <li><b>train_classifier:</b> Python script refactored from "ML Pipeline Preparation.ipynb"</li>
+  <li><b>README.md:</b> This file.</li>
+</ul>
+
+<ul>
+  <li><b>/WebApp:</b> File structure:</li>
+
+
+<div style="font-family: 'Courier New', Courier, monospace; white-space: pre;">
+
+- app<br>
+&nbsp;&nbsp;|- template<br>
+&nbsp;&nbsp;&nbsp;&nbsp;|- master.html  # main page of web app<br>
+&nbsp;&nbsp;&nbsp;&nbsp;|- go.html  # classification result page of web app<br>
+&nbsp;&nbsp;|- run.py  # Flask file that runs app<br><br>
+
+- data<br>
+&nbsp;&nbsp;|- disaster_categories.csv  # data to process<br>
+&nbsp;&nbsp;|- disaster_messages.csv  # data to process<br>
+&nbsp;&nbsp;|- process_data.py<br>
+&nbsp;&nbsp;|- InsertDatabaseName.db  # database to save clean data to<br><br>
+
+- models<br>
+&nbsp;&nbsp;|- train_classifier.py<br>
+&nbsp;&nbsp;|- classifier.pkl  # saved model <br><br>
+
+- README.md
+</div>
 </ul>
 
 ## Libraries <a name="libraries"></a>
@@ -50,11 +76,29 @@ I used a Jupyter notebook (Python) for the analysis. The ipynb file should run o
 Here are the additional Python libraries used within this project:
 
 <ul>
-  <li>Numpy Version "1.26.4"</li>
-  <li>Pandas Version "2.2.2"</li>
-  <li>Matplotlib Version "3.8.4"</li>
-  <li>seaborn Version "0.13.2"</li>
-  <li>glob Version "0.5.0"</li>
+  <li>NumPy</li>
+  <li>Pandas</li>
+  <li>pickle</li>
+  <li>statistics</li>
+  <li>SQLAlchemy</li>
+  <li>NLTK (Natural Language Toolkit)</li>
+  <li>Scikit-learn
+    <ul>
+      <li>Pipeline</li>
+      <li>CountVectorizer</li>
+      <li>TfidfTransformer</li>
+      <li>train_test_split</li>
+      <li>MultiOutputClassifier</li>
+      <li>RandomForestClassifier</li>
+      <li>AdaBoostClassifier</li>
+      <li>FeatureUnion</li>
+      <li>f1_score</li>
+      <li>recall_score</li>
+      <li>precision_score</li>
+      <li>classification_report</li>
+    </ul>
+  </li>
+  <li>custom_transformer (StartingVerbExtractor)</li>
 </ul>
 
 You will need to download Stackoverflow’s Annual Developer Surveys from 2019 till 2024 and put them in a path structure of this form:
