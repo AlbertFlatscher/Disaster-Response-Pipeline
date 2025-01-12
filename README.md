@@ -15,7 +15,7 @@ Building a ML Pipeline including NLP capabilities and a Classifier able to categ
 Building a Disaster Response ML Pipeline is one of the projects within the Udacity Data Scientist Nanodegree Program. The training data was provided by [Appen](https://www.appen.com/)
 
 ## Data <a name="data"></a>
-The data provided consist of three .csv Files:
+The data provided consist of two .csv Files:
 <ul>
   <li>messages.csv - contains 26248 destinct Text messages send in disaster situations
   <li>categories.csv - maps the messages into one of 36 categories
@@ -101,18 +101,18 @@ Here are the additional Python libraries used within this project:
   <li>custom_transformer (StartingVerbExtractor)</li>
 </ul>
 
-You will need to download Stackoverflow’s Annual Developer Surveys from 2019 till 2024 and put them in a path structure of this form:
-
-os.path.join('..', 'data', 'stack-overflow-developer-survey-' + year)
-
-[Here](https://insights.stackoverflow.com/survey) you can find the data. </br>
-
 ## Results <a name="results"></a>
 
-The aim of the analysis was to get an overview of the most used programming languages from 2019 till 2024. From this starting point it was tried to find trends and conclusions.
+The best performing ML model conained a CountVectorizer, StartingVerbExtractor and a MultiOutputClassifier using AdaBoost as an estimator. The best parameters for the Estimator were: n_estimators=100, learning_rate=0.01.
 
-The results can be found on Medium [Blog](https://medium.com/p/f1930bfe91bc/edit).
+This enabled us to get the following metrics:
+<li>Accuracy: 0.944</li>
+<li>Precision: 0.932</li>
+<li>Recall: 0.944</li>
+<li>F1-score: 0.9301</li>
+
+We were able to to use this pipeline for creating a Web Application which can be used for disaster response coordination.
 
 ## Licensing <a name="licensing"></a>
 
-Thanks to Stack Overflow for providing the data.
+Thanks to [Appen](https://www.appen.com/) for providing the data.
