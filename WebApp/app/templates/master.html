@@ -64,12 +64,11 @@
     {% endfor %}
 </div>
 
-<script type="text/javascript">
-    const graphs = {{graphJSON | safe}};
-    const ids = {{ids | safe}};
-    for(let i in graphs) {
-        Plotly.plot(ids[i], graphs[i].data, graphs[i].layout);
-    }
+<script>
+    var graphs = {{ graphJSON | safe }};
+    graphs.forEach(function(graph, index) {
+        Plotly.newPlot("graph-" + index, graph.data, graph.layout || {});
+    });
 </script>
 
 </body>
