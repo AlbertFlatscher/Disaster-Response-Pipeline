@@ -13,8 +13,8 @@ def load_data(messages_filepath, categories_filepath):
         df: dataframe of merged input from the two .csv
     '''
     # load datasets
-    messages = pd.read_csv('messages.csv')
-    categories = pd.read_csv('categories.csv')
+    messages = pd.read_csv(messages_filepath)
+    categories = pd.read_csv(categories_filepath)
 
     # merge datasets
     df = pd.merge(messages, categories, on='id')
