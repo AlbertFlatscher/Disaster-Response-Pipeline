@@ -20,7 +20,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import f1_score, recall_score, precision_score, classification_report
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.pipeline import FeatureUnion
-from custom_transformer import StartingVerbExtractor
+from sklearn.model_selection import GridSearchCV
 
 # disable warnings
 import warnings
@@ -33,7 +33,7 @@ def load_data(database_filepath):
     X = df.message.values
     Y = df.drop(['id', 'message', 'original', 'genre'], axis=1).values
 
-    category_names = df.drop(['id', 'message', 'original', 'genre'], axis=1).columns
+    category_names = df.drop(['id', 'message', 'original', 'genre'], axis=1).columns.to_list()
 
     return X, Y, category_names
 
@@ -62,13 +62,20 @@ def build_model():
                     ('text_pipeline', Pipeline([
                         ('vect', CountVectorizer(tokenizer=tokenize)),
                         ('tfidf', TfidfTransformer())
-                    ])),
+                    ]))
 
-                    ('starting_verb', StartingVerbExtractor())
                 ])),
 
         ('clf', MultiOutputClassifier(AdaBoostClassifier(n_estimators=100, learning_rate=0.01)))
     ])
+
+    # define the parameters to be investigated via Gridsearch
+    parameters = {
+        'clf__estimator__n_estimators': [50, 100],
+        'clf__estimator__learning_rate': [0.01, 0.1]    
+    }
+
+    Ada_SVE_pipeline = GridSearchCV(Ada_SVE_pipeline, param_grid=parameters, n_jobs=-1)
 
     return Ada_SVE_pipeline
 
@@ -94,10 +101,16 @@ def evaluate_model(model, X_test, y_test, category_names):
     f1_sores_list = []
 
     for i in range(y_test.shape[1]):
-        reports_list.append(classification_report(y_test[:, i], y_pred[:, i], output_dict=True))
+        print(f"Evaluating category: {category_names[i]}")
+        report = classification_report(y_test[:, i], y_pred[:, i], target_names=[f'{category_names[i]} 0', f'{category_names[i]} 1'])
+        print(report)
+        reports_list.append(report)
         precisions_list.append(precision_score(y_test[:, i], y_pred[:, i], average='weighted'))
         recalls_list.append(recall_score(y_test[:, i], y_pred[:, i], average='weighted'))
         f1_sores_list.append(f1_score(y_test[:, i], y_pred[:, i], average='weighted'))
+
+        # Print the classification report
+        print("Classification Report:\n", report)
 
     # print best Parameters
     try:
