@@ -80,6 +80,29 @@ def index():
                 }
             }
         ]
+
+        # 2nd visualisation
+        category_names = df.columns[4:]
+        category_counts = df[category_names].sum().sort_values(ascending=False).head(10)
+
+        graphs.append({ü
+            'data': [
+                Bar(
+                    x=category_counts.index,
+                    y=category_counts.values
+                )
+            ],
+
+            'layout': {
+                'title': 'Top 10 Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category"
+                }
+            }
+        })
     
         # encode plotly graphs in JSON
         ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]

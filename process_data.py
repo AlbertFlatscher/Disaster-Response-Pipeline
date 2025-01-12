@@ -41,12 +41,16 @@ def clean_data(df):
     categories.columns = category_colnames
 
     # Convert category values to just numbers 0 or 1.
-    for column in categories:
+    # loop through all columns
+    for column in categories.columns:
         # set each value to be the last character of the string
         categories[column] = categories[column].str[-1:]
-    
-        # convert column from string to numeric
-        categories[column] = categories[column].astype(int)
+
+    # convert df from string to numeric
+    categories = categories.apply(pd.to_numeric)
+
+    # drop rows with non boolean values
+    categories = categories[(categories <= 1).all(axis=1)]
 
     # drop the original categories column from `df`
     df = df.drop('categories', axis=1)
@@ -56,6 +60,7 @@ def clean_data(df):
 
     # drop duplicates
     df = df.drop_duplicates()
+    df = df.dropna()
 
     return df
 
@@ -70,7 +75,7 @@ def save_data(df, database_filename):
         - 
     '''
     engine = create_engine('sqlite:///' + database_filename)
-    df.to_sql('Responses', engine, index=False)
+    df.to_sql('Responses', engine, index=False, if_exists='replace')
 
 
 def main():
