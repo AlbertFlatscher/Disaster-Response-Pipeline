@@ -9,6 +9,7 @@ Building a ML Pipeline including NLP capabilities and a Classifier able to categ
 4. [Libraries](#libraries)
 5. [Results](#results)
 6. [Licensing](#licensing)
+7. [Code Execution](#execution)
 
 ## Project Motivation <a name="motivation"></a>
 
@@ -116,3 +117,16 @@ We were able to to use this pipeline for creating a Web Application which can be
 ## Licensing <a name="licensing"></a>
 
 Thanks to [Appen](https://www.appen.com/) for providing the data.
+
+<div class="container">
+    <h2>Code Execution <a name="execution"></a></h2>
+
+    # To create a processed sqlite db
+    python process_data.py disaster_messages.csv disaster_categories.csv DisasterResponse.db
+
+    # To train and save a pkl model
+    python train_classifier.py ../data/DisasterResponse.db classifier.pkl
+
+    # To deploy the application locally
+    python run.py
+</div>
