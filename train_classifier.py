@@ -33,7 +33,7 @@ def load_data(database_filepath):
     X = df.message.values
     Y = df.drop(['id', 'message', 'original', 'genre'], axis=1).values
 
-    category_names = df.drop(['id', 'message', 'original', 'genre'], axis=1).columns
+    category_names = df.drop(['id', 'message', 'original', 'genre'], axis=1).columns.to_list()
 
     return X, Y, category_names
 
@@ -95,15 +95,26 @@ def evaluate_model(model, X_test, y_test, category_names):
     y_pred = model.predict(X_test)
 
     # calculate scores for each Class
-    # reports_list = []
+    reports_list = []
     precisions_list = []
     recalls_list = []
     f1_sores_list = []
 
     for i in range(y_test.shape[1]):
+        # print(f"Evaluating category: {category_names[i]}")
+        # report = classification_report(y_test[:, i], y_pred[:, i], target_names=[f'{category_names[i]} 0', f'{category_names[i]} 1'])
+        # print(report)
+
         print(f"Evaluating category: {category_names[i]}")
-        report = classification_report(y_test[:, i], y_pred[:, i], labels=[f'{category_names[i]} 0', f'{category_names[i]} 1'])
+
+        # Ensure labels exist in y_true and y_pred
+        y_true = y_test[:, i]
+        y_pred_col = y_pred[:, i]
+
+        # Generate report with defined 'labels' to include all classes.
+        report = classification_report(y_true, y_pred_col, labels=[0,1], target_names=[f'{category_names[i]} 0', f'{category_names[i]} 1'])
         print(report)
+
         reports_list.append(report)
         precisions_list.append(precision_score(y_test[:, i], y_pred[:, i], average='weighted'))
         recalls_list.append(recall_score(y_test[:, i], y_pred[:, i], average='weighted'))
